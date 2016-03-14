@@ -1,0 +1,131 @@
+html, body {
+  height: 100%;
+}
+
+body > .ember-view {
+  height: calc(100% - 51px);
+}
+
+.navbar {
+  margin-bottom: 0;
+}
+
+.container-narrow {
+  max-width: 730px;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+.navbar-nav li {
+  cursor: pointer;
+}
+
+#map {
+  height: 100%;
+}
+
+#search-row {
+  margin: 15px 0;
+}
+
+#explorer-navbar {
+  position: absolute;
+  top: 60px;
+  right: 10px;
+  max-width: 50px;
+  z-index: 6;
+}
+
+#explorer-navbar > .nav-stacked {
+  background-color: #FFF;
+  border-radius: 3px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+#explorer-filters {
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+  width: 100%;
+}
+
+#explorer-search {
+  position: absolute;
+  top: 60px;
+  right: 65px;
+  width: 300px;
+}
+
+#explorer-search-autocomplete {
+  position: absolute;
+  top: 105px;
+  right: 65px;
+  width: 300px;
+  max-height: 300px;
+}
+
+#explorer-search-autocomplete .explorer-container {
+  padding: 5px;
+}
+
+#explorer-search-autocomplete ul {
+  padding-left: 25px;
+}
+
+.explorer-data {
+  position: absolute;
+  bottom: 65px;
+  left: 0px;
+  width: 100%;
+  height: 275px;
+  z-index: 5;
+}
+
+.explorer-data > .explorer-container {
+  height: 275px;
+  overflow: scroll;
+}
+
+.table {
+  max-width: 1160px;
+}
+
+.explorer-container {
+  background-color: #FFF;
+  border-radius: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+#too-far-out {
+  position: absolute;
+  top: 60px;
+  left: 45px;
+  max-width: 300px;
+}
+
+#street-viewer {
+  position: absolute;
+  top: 60px;
+  right: 65px;
+  width: 500px;
+  background-color: #FFF;
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+}
+
+#street-viewer-content {
+  height: 500px;
+}
+
+#loading-spinner {
+  display: none;
+  position: absolute;
+  z-index: 9999999;
+  color: #d7524b;
+}

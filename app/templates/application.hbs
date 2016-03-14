@@ -1,0 +1,130 @@
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"><img alt="Brand" style="height: 25px" src="/explorer/images/prkng.png"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-question-circle"></i> About<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#">Prkng</a></li>
+            <li><a href="#">Collaborators</a></li>
+            <li><a href="#">Libraries</a></li>
+            <li><a href="#">Process</a></li>
+            <li><a href="#">Datasets/Links</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-location-arrow"></i> {{city.name}}<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" {{action 'changeCity' 'montreal'}}>Montréal</a></li>
+            <li><a href="#" {{action 'changeCity' 'quebec'}}>Québec City</a></li>
+            <li><a href="#" {{action 'changeCity' 'newyork'}}>New York</a></li>
+            <li><a href="#" {{action 'changeCity' 'boston'}}>Boston</a></li>
+            <li><a href="#" {{action 'changeCity' 'seattle'}}>Seattle</a></li>
+          </ul>
+        </li>
+      </ul>
+   </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+{{pa-map showSlots=showSlots city=city map=map lots=lots slots=slots selectedSlot=selectedSlot coords=coords streetViewPosition=streetViewPosition zoomLevel=zoomLevel selectedSearchResult=selectedSearchResult refresh="reloadModel"}}
+
+<div id="loading-spinner">
+  <i class="fa fa-circle-o-notch fa-spin fa-3x"></i>
+</div>
+
+<div id="explorer-navbar">
+  <ul class="nav nav-pills nav-stacked">
+    <li {{bind-attr class="showSearch:active"}}><a href="#" {{action 'toggleSearch'}} title="Show Search Pane"><i class="fa fa-search"></i></a></li>
+    <li {{bind-attr class="showFilters:active"}}><a href="#" {{action 'toggleFilters'}} title="Show Filters Pane"><i class="fa fa-sliders"></i></a></li>
+    <li {{bind-attr class="showSlots:active:"}}><a href="#" {{action 'showSlots'}} title="Show Slots"><i class="fa fa-map-o"></i></a></li>
+    <li {{bind-attr class="showLots:active:"}}><a href="#" {{action 'showLots'}} title="Show Lots and Garages"><i class="fa fa-fw fa-map-marker"></i></a></li>
+    <li {{bind-attr class="showStreetView:active"}}><a href="#" {{action 'toggleStreetView'}} title="Show Street View"><i class="fa fa-eye"></i></a></li>
+    <li><a href="#" {{action 'refresh'}} title="Refresh"><i class="fa fa-refresh"></i></a></li>
+  </ul>
+</div>
+
+{{#if showSearch}}
+<div id="explorer-search" class="explorer-toolbar">
+  <div class="explorer-container">
+    <div {{bind-attr class=":input-group searchFail:has-error"}}>
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" {{action 'clearSearch'}}><i class="fa fa-times-circle"></i></button>
+      </span>
+      {{focus-input type="text" class="form-control" placeholder="Search for..." value=searchQuery action='search'}}
+    </div>
+  </div>
+</div>
+
+{{#if isSearching}}
+<div id="explorer-search-autocomplete" class="explorer-toolbar">
+  <div class="explorer-container">
+    <ul>
+      {{#each result in searchResults}}
+        <li><a href="#" {{action 'searchZoom' result}}>{{ result.place_name }}</a></li>
+      {{else}}
+        <li>No results found.</li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+{{/if}}
+{{/if}}
+
+{{#if showFilters}}
+<div id="explorer-filters" class="explorer-toolbar">
+  <div class="explorer-container container">
+    <div class="row">
+      <div class="col-md-2">
+        {{view "select" content=typeStatuses value=filterType class="form-control"}}
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+          {{bootstrap-datepicker value=filterDate autoclose=true clearBtn=true todayHighlight=true class="form-control" placeholder="Checkin date"}}
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+          {{input type="text" value=filterTime class="form-control" placeholder="Checkin time"}}
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+          {{input type="text" value=filterDuration class="form-control" placeholder="Duration (hours)"}}
+        </div>
+      </div>
+      <div class="col-md-2">
+        {{view "select" content=restrictTypeStatuses value=filterRestrictType class="form-control"}}
+      </div>
+      <div class="col-md-2">
+        <div class="btn-group btn-group-justified">
+          <a href="#" class="btn btn-success" {{action 'runFilters'}}><i class="fa fa-check"></i> Filter</a>
+          <a href="#" class="btn btn-default" {{action 'clearFilters'}}><i class="fa fa-times-circle"></i> Clear</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}
+
+{{#if tooFarOut}}
+{{#if showSlots}}
+  <div id="too-far-out" class="alert alert-danger">
+    <i class="fa fa-exclamation-circle"></i> Zoom in closer to view slots.
+  </div>
+{{/if}}
+{{/if}}
+
+{{#if showStreetView}}
+  {{pa-street-viewer position=streetViewPosition}}
+{{/if}}
+
+{{outlet}}
