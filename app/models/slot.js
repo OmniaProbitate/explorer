@@ -1,4 +1,6 @@
 import DS from 'ember-data';
+import ruleToString from '../utils/rule-to-string';
+
 
 export default DS.Model.extend({
   wayName: DS.attr('string'),
@@ -12,34 +14,18 @@ export default DS.Model.extend({
   slotColour: function() {
     return this.get('isSlotPaid') ? '#EAB417' : '#485966';
   }.property('isSlotPaid'),
-  descriptions: function() {
-    var results = [];
+  ruleStrings: function() {
+    var results = "";
     if (this.get('rules')) {
       this.get('rules').forEach(function(rule) {
-        results.push(rule.description);
-      });
-    }
-    return results;
-  }.property('rules'),
-  agendas: function() {
-    var results = [];
-    if (this.get('rules')) {
-      this.get('rules').forEach(function(rule) {
-        results.push(JSON.stringify(rule.agenda));
+        var rts = ruleToString(rule);
+        results += ("<p><strong>" + rts[0] + "</strong><br />");
+        results += (rts[1] + "</p>");
       });
     }
     return results;
   }.property('rules'),
   mapPopupString: function() {
-    return "<strong>"+this.get("wayName")+"</strong> &mdash; ID #"+this.get("id")+"<br />"+this.get('descriptions').join("<br />")+"<br />"+(this.get('permitNumber') ? "Permit number "+this.get("permitNumber") : "");
-  }.property('descriptions'),
-  permitNumber: function() {
-    var num = null;
-    if (this.get('rules')) {
-      this.get('rules').forEach(function(rule) {
-        if (rule.permit_no) { num = rule.permit_no; }
-      });
-    }
-    return num;
-  }.property('rules')
+    return "<h4>"+this.get("wayName")+"</h4><hr />"+this.get('ruleStrings')+"<br /><small>ID #"+this.get("id")+"</small>";
+  }.property('ruleStrings')
 });
