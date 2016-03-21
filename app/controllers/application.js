@@ -123,6 +123,10 @@ export default Ember.Controller.extend({
     this.set("lots", this.get("showLots") ? this.get("model.lots") : Ember.A());
   }.observes("model", "showLots"),
 
+  shouldShowLots: function() {
+    return (this.get("city").id === "montreal" || this.get("city").id === "quebec");
+  }.property("city"),
+
   actions: {
     changeCity: function(city) {
       this.set("city", cities_fixture[city]);

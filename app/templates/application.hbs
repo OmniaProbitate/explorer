@@ -43,7 +43,9 @@
     <li {{bind-attr class="showSearch:active"}}><a href="#" {{action 'toggleSearch'}} title="Show Search Pane"><i class="fa fa-search"></i></a></li>
     <li {{bind-attr class="showFilters:active"}}><a href="#" {{action 'toggleFilters'}} title="Show Filters Pane"><i class="fa fa-sliders"></i></a></li>
     <li {{bind-attr class="showSlots:active:"}}><a href="#" {{action 'showSlots'}} title="Show Slots"><i class="fa fa-map-o"></i></a></li>
+    {{#if shouldShowLots}}
     <li {{bind-attr class="showLots:active:"}}><a href="#" {{action 'showLots'}} title="Show Lots and Garages"><i class="fa fa-fw fa-map-marker"></i></a></li>
+    {{/if}}
     <li {{bind-attr class="showStreetView:active"}}><a href="#" {{action 'toggleStreetView'}} title="Show Street View"><i class="fa fa-eye"></i></a></li>
     <li><a href="#" {{action 'refresh'}} title="Refresh"><i class="fa fa-refresh"></i></a></li>
   </ul>
