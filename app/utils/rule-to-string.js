@@ -14,26 +14,6 @@ export default function ruleToString(rule) {
       weekdays = daysofwk.slice(0,5),
       weekends = daysofwk.slice(-2);
 
-  // don't mention the rule if we are outside of the proper season
-  if (rule.season_start) {
-    var now = moment(),
-        startMonth = parseInt(rule.season_start.split("-")[0]),
-        startDay   = parseInt(rule.season_start.split("-")[1]),
-        endMonth   = parseInt(rule.season_end.split("-")[0]),
-        endDay     = parseInt(rule.season_end.split("-")[1]);
-
-    if (startMonth < endMonth && !(now.month() >= startMonth && now.month() <= endMonth)) {
-      return; // season start comes 1st in calendar year, current month is not within season
-    } else if (startMonth > endMonth && (now.month() < startMonth && now.month() > endMonth)) {
-      return; // season start comes 2nd in calendar year, current month is not within season
-    } else if (now.month() === startMonth && now.day() < startDay) {
-      return; // current month is in start month and current day is before start day
-    } else if (now.month() === endMonth && now.day() > endDay) {
-      return; // current month is in end month and current day is after end day
-    }
-    // otherwise, keep going
-  }
-
   // display the restriction type
   var authVehicles = ["police", "fire", "emergency", "diplomat"];
   if (rule.time_max_parking && rule.restrict_types.indexOf("paid") >= 0) {

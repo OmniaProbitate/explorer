@@ -176,10 +176,10 @@ export default Ember.Controller.extend({
       if (this.get("filterDate") && this.get("filterTime")) {
         filterDateTime = moment.utc(this.get("filterDate"));
         filterDateTime.hour(this.get("filterTime").split(":")[0]).minute(this.get("filterTime").split(":")[1]);
+        filters.checkin = filterDateTime.format('YYYY-MM-DDTHH:mm:00');
       } else {
-        filterDateTime = moment.utc();
+        filters.checkin = null;
       }
-      filters.checkin = filterDateTime.format('YYYY-MM-DDTHH:mm:00');
       if (this.get("filterRestrictType") !== "All") {
         filters.type = this.get("restrictTypeStatuses").indexOf(this.get("filterRestrictType"));
       }

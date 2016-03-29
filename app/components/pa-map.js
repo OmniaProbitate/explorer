@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import ENV from "../config/environment";
 /* global L */
 /* global google */
 
@@ -72,7 +73,7 @@ export default Ember.Component.extend({
     var map = L.mapbox.map('map', 'arnaudspuhler.l54pj66f', {featureLayer: false, maxZoom: 22});
     map.setView([city.lat, city.long], 11);
 
-    Ember.$.getJSON('/v1/areas', function(data) {
+    Ember.$.getJSON(ENV.APP.apiHost + '/v1/areas', function(data) {
       var url = data.versions[data.latest_version].geojson_mask_addr.split('.gz')[0];
       Ember.$.ajax(url, {
         success: function(filedata) {
